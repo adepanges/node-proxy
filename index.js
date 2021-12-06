@@ -3,11 +3,12 @@ var setup = require('proxy');
 
 const proxyServer = http.createServer() 
 proxyServer.authenticate = (req, fn) => {
-    console.log('Request', req.method, req.url)
-
-    if (req.headers['proxy-authorization'] != 'Basic dXNlcjpwYXNz') {
-        const error = new Error({message: 'Error Proxy Auth' })
-        fn(error, false);
+    console.log('Request', req.method, req.url, req.headers)
+    if (
+        req.headers['proxy-authorization']
+        && req.headers['proxy-authorization'] != 'Basic dXNlcjpwYXNz'
+    ) {
+        fn({message: 'Error Proxy Auth' }, false);
     } else {
 
         fn (null, true);
