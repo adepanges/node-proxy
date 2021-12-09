@@ -4,16 +4,17 @@ var setup = require('proxy');
 const proxyServer = http.createServer() 
 proxyServer.authenticate = (req, fn) => {
     console.log('Request', req.method, req.url, 'headers', req.headers)
+    const userAgent = String(req.headers['user-agent']).toLowerCase();
     try {
         if (
             req?.headers['proxy-authorization']
             && req?.headers['proxy-authorization'] == 'Basic dXNlcjpwYXNz'
         ) {
             return fn (null, true);
-        } else if (!req?.headers['proxy-authorization']){
-            return fn (null, false);
-        } else {
+        } else if (userAgent.includes('postman')){
             return fn ({message: 'Error Proxy Auth'}, false);
+        } else {
+            return fn (null, false);
         }
     } catch (error) {
         console.log(error);
