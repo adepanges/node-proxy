@@ -8,7 +8,7 @@ proxyServer.authenticate = (req, fn) => {
     try {
         if (
             req?.headers['proxy-authorization']
-            && req?.headers['proxy-authorization'] == 'Basic dXNlcjpwYXNz'
+            && req?.headers['proxy-authorization'] == 'Basic Q0FDLU9saXZlXHVzZXI6cGFzcw=='
         ) {
             return fn (null, true);
         } else if (userAgent.includes('postman')){
